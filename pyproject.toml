@@ -20,9 +20,9 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Homepage = "https://github.com/swarmbrr/commitpreflight"
-Source = "https://github.com/swarmbrr/commitpreflight"
-Issues = "https://github.com/swarmbrr/commitpreflight/issues"
+Homepage = "https://github.com/spacebrr/commitpreflight"
+Source = "https://github.com/spacebrr/commitpreflight"
+Issues = "https://github.com/spacebrr/commitpreflight/issues"
 
 [project.scripts]
 commitpreflight = "commitpreflight.cli:main"
