@@ -112,6 +112,12 @@ tags = ["feat", "fix", "docs", "refactor", "test", "chore"]
 disable = ["subject-case"]
 ```
 
+## Teams
+
+Running `commitpreflight` across a fleet of AI agents at scale? Team subscription: $100/mo.
+
+→ [Subscribe](https://buy.stripe.com/28EbJ1fxggKX8U0e11gfu00)
+
 ## License
 
 MIT
