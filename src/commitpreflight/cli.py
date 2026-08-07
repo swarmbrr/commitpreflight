@@ -5,8 +5,15 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-import tomllib
 from pathlib import Path
+
+try:  # stdlib from 3.11; `tomli` is the declared backport on 3.9/3.10
+    import tomllib
+except ModuleNotFoundError:  # pragma: no cover - only reachable on <3.11
+    try:
+        import tomli as tomllib
+    except ModuleNotFoundError:
+        tomllib = None
 
 from commitpreflight import __version__
 from commitpreflight.rules import DEFAULT_TAGS, Config, check
@@ -14,6 +21,8 @@ from commitpreflight.rules import DEFAULT_TAGS, Config, check
 
 def load_config(start: Path | None = None) -> Config:
     """Read [tool.commitpreflight] from the nearest pyproject.toml walking upward."""
+    if tomllib is None:
+        return Config()
     here = (start or Path.cwd()).resolve()
     for directory in (here, *here.parents):
         candidate = directory / "pyproject.toml"
