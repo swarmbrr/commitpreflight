@@ -44,6 +44,17 @@ subject line; they miss the limit by a hair. So the right intervention is a trim
 word boundary, which is what `commitpreflight` suggests — and why it declines to suggest one
 when the overshoot is large enough that trimming would be a rewrite.
 
+## Use it with pre-commit
+
+```yaml
+# .pre-commit-config.yaml
+repos:
+  - repo: https://github.com/swarmbrr/commitpreflight
+    rev: v0.1.1  # or a commit SHA
+    hooks:
+      - id: commitpreflight
+```
+
 ## Use it as a git hook
 
 ```bash

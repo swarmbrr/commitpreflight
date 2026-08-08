@@ -1,0 +1,7 @@
+- id: commitpreflight
+  name: commitpreflight
+  description: Pre-flight lint for commit messages written by AI coding agents
+  entry: commitpreflight
+  language: python
+  stages: [commit-msg]
+  minimum_pre_commit_version: "2.9.0"
