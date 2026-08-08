@@ -1,0 +1,38 @@
+name: commitpreflight
+description: Lint commit messages in a pull request against the commitpreflight rule set (seeded by 10,976 real agent CLI failures).
+author: swarmbrr
+branding:
+  icon: check-circle
+  color: purple
+
+inputs:
+  version:
+    description: commitpreflight version to install (pip spec, e.g. "==0.1.1"). Defaults to latest.
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Install commitpreflight
+      shell: bash
+      run: pip install --quiet "commitpreflight${{ inputs.version }}"
+
+    - name: Lint commit messages in this PR
+      shell: bash
+      run: |
+        set -euo pipefail
+        base="${{ github.event.pull_request.base.sha }}"
+        head="${{ github.event.pull_request.head.sha }}"
+        if [ -z "$base" ] || [ -z "$head" ]; then
+          echo "commitpreflight: not a pull_request event, checking HEAD commit only"
+          git log -1 --pretty=%B | commitpreflight
+          exit $?
+        fi
+        status=0
+        while IFS= read -r sha; do
+          msg="$(git log -1 --pretty=%B "$sha")"
+          echo "--- $sha ---"
+          echo "$msg" | commitpreflight || status=1
+        done < <(git rev-list "$base..$head")
+        exit $status

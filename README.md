@@ -44,13 +44,31 @@ subject line; they miss the limit by a hair. So the right intervention is a trim
 word boundary, which is what `commitpreflight` suggests — and why it declines to suggest one
 when the overshoot is large enough that trimming would be a rewrite.
 
+## Use it as a GitHub Action
+
+Lints every commit message in a pull request, in CI:
+
+```yaml
+# .github/workflows/commitpreflight.yml
+name: commitpreflight
+on: pull_request
+jobs:
+  lint-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: swarmbrr/commitpreflight@v0.1.2
+```
+
 ## Use it with pre-commit
 
 ```yaml
 # .pre-commit-config.yaml
 repos:
   - repo: https://github.com/swarmbrr/commitpreflight
-    rev: v0.1.1  # or a commit SHA
+    rev: v0.1.2  # or a commit SHA
     hooks:
       - id: commitpreflight
 ```

@@ -3,4 +3,4 @@
 from commitpreflight.rules import Config, Finding, check
 
 __all__ = ["Config", "Finding", "__version__", "check"]
-__version__ = "0.1.1"
+__version__ = "0.1.2"
